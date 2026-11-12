@@ -1,0 +1,15 @@
+{% comment %}
+  Logo texte STELINA avec l'étoile au-dessus du I.
+  @param {string} [modifier] - 'hero' pour la grande version animée
+  @param {boolean} [decorative] - masque le logo aux lecteurs d'écran
+{% endcomment %}
+<span
+  class="stl-logo{% if modifier %} stl-logo--{{ modifier }}{% endif %}"
+  {% if decorative %}
+    aria-hidden="true"
+  {% else %}
+    role="img" aria-label="{{ shop.name | escape }}"
+  {% endif %}
+>
+  <span aria-hidden="true">STEL</span><span class="stl-logo__i" aria-hidden="true">I{% render 'stelina-star', class: 'stl-logo__star' %}</span><span aria-hidden="true">NA</span>
+</span>

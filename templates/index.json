@@ -1,0 +1,163 @@
+{
+  "sections": {
+    "hero": {
+      "type": "stelina-hero",
+      "blocks": {
+        "photo-1": {
+          "type": "photo",
+          "settings": {
+            "link": "shopify://collections/colliers"
+          }
+        },
+        "photo-2": {
+          "type": "photo",
+          "settings": {
+            "link": "shopify://collections/all"
+          }
+        },
+        "photo-3": {
+          "type": "photo",
+          "settings": {
+            "link": "shopify://collections/bracelets"
+          }
+        }
+      },
+      "block_order": [
+        "photo-1",
+        "photo-2",
+        "photo-3"
+      ],
+      "settings": {
+        "show_logo": true,
+        "hide_header_logo": true,
+        "slogan": "Brille chaque jour, sans compromis.",
+        "button_label": "Découvrir les bijoux",
+        "button_link": "shopify://collections/all",
+        "animate": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 28,
+        "padding_bottom": 48
+      }
+    },
+    "marquee": {
+      "type": "stelina-marquee",
+      "blocks": {
+        "m1": {
+          "type": "text",
+          "settings": {
+            "text": "Acier inoxydable"
+          }
+        },
+        "m2": {
+          "type": "text",
+          "settings": {
+            "text": "Pièces limitées"
+          }
+        },
+        "m3": {
+          "type": "text",
+          "settings": {
+            "text": "Livraison partout en France"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "speed": 16,
+        "color_scheme": "scheme-3",
+        "pause_label": "Mettre le bandeau en pause"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Les incontournables",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "frontpage",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "swipe_on_mobile": false,
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "parures": {
+      "type": "stelina-parures",
+      "blocks": {
+        "parure-papillon": {
+          "type": "parure",
+          "settings": {
+            "product": "parure-papillon",
+            "title": "Parure Papillon",
+            "composition": "Papillia + Éclosion"
+          }
+        },
+        "parure-lien": {
+          "type": "parure",
+          "settings": {
+            "product": "parure-lien",
+            "title": "Parure Lien",
+            "composition": "Éternel + Harmonie"
+          }
+        },
+        "parure-superposition": {
+          "type": "parure",
+          "settings": {
+            "product": "parure-superposition",
+            "title": "Parure Superposition",
+            "composition": "Papillia + Dualité"
+          }
+        },
+        "parure-medaille": {
+          "type": "parure",
+          "settings": {
+            "product": "parure-medaille",
+            "title": "Parure Médaille",
+            "composition": "Soléa + Élora"
+          }
+        }
+      },
+      "block_order": [
+        "parure-papillon",
+        "parure-lien",
+        "parure-superposition",
+        "parure-medaille"
+      ],
+      "settings": {
+        "heading": "Les parures",
+        "heading_size": "h1",
+        "text": "<p>Deux bijoux pensés pour se porter ensemble.</p>",
+        "button_label": "Voir toutes les parures",
+        "button_link": "shopify://collections/parures",
+        "color_scheme": "scheme-2",
+        "padding_top": 48,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "featured",
+    "parures"
+  ]
+}

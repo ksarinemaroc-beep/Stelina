@@ -1,0 +1,55 @@
+{% comment %}Bandeau défilant, avec bouton pause. Statique si l'animation est réduite.{% endcomment %}
+{%- if section.blocks.size > 0 -%}
+  <div
+    class="stl-marquee color-{{ section.settings.color_scheme }} gradient"
+    style="--stl-marquee-duration: {{ section.settings.speed }}s;"
+    data-stl-marquee
+  >
+    <div class="stl-marquee__viewport">
+      <div class="stl-marquee__track">
+        {%- for i in (1..8) -%}
+          <ul class="stl-marquee__group" role="list"{% unless forloop.first %} aria-hidden="true"{% endunless %}>
+            {%- for block in section.blocks -%}
+              <li class="stl-marquee__item"{% if forloop.parentloop.first %} {{ block.shopify_attributes }}{% endif %}>
+                {% render 'stelina-star' %}
+                <span>{{ block.settings.text | escape }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endfor -%}
+      </div>
+    </div>
+    <button type="button" class="stl-marquee__toggle" aria-pressed="false" data-stl-marquee-toggle>
+      <span class="visually-hidden">{{ section.settings.pause_label | escape }}</span>
+      <svg class="stl-marquee__icon-pause" viewBox="0 0 10 10" aria-hidden="true" focusable="false" width="10" height="10"><path fill="currentColor" d="M1.5 0H4v10H1.5zM6 0h2.5v10H6z"/></svg>
+      <svg class="stl-marquee__icon-play" viewBox="0 0 10 10" aria-hidden="true" focusable="false" width="10" height="10"><path fill="currentColor" d="M1.5 0l8 5-8 5z"/></svg>
+    </button>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Stelina · Bandeau",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "range", "id": "speed", "min": 6, "max": 40, "step": 2, "unit": "s", "default": 16, "label": "Temps de passage d'une série de messages", "info": "Plus la durée est longue, plus le défilement est lent." },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Couleurs", "default": "scheme-3" },
+    { "type": "text", "id": "pause_label", "default": "Mettre le bandeau en pause", "label": "Nom du bouton pause (lecteurs d'écran)" }
+  ],
+  "blocks": [
+    { "type": "text", "name": "Message", "settings": [{ "type": "text", "id": "text", "default": "Acier inoxydable", "label": "Texte" }] }
+  ],
+  "presets": [
+    {
+      "name": "Stelina · Bandeau",
+      "blocks": [
+        { "type": "text", "settings": { "text": "Acier inoxydable" } },
+        { "type": "text", "settings": { "text": "Pièces limitées" } },
+        { "type": "text", "settings": { "text": "Livraison partout en France" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

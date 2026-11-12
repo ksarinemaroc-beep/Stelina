@@ -1,0 +1,40 @@
+{% comment %}
+  Stelina : polices de marque (auto-hébergées), couleurs et feuille de style.
+  Rendu dans layout/theme.liquid, après base.css.
+{% endcomment %}
+{%- if settings.stelina_fonts -%}
+  {% comment %}theme-check-disable AssetPreload{% endcomment %}
+  <link rel="preload" as="font" href="{{ 'stelina-jost-latin-normal.woff2' | asset_url }}" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="{{ 'stelina-bodoni-moda-latin-normal.woff2' | asset_url }}" type="font/woff2" crossorigin>
+  {% comment %}theme-check-enable AssetPreload{% endcomment %}
+{%- endif -%}
+{% style %}
+  {%- if settings.stelina_fonts -%}
+    {%- assign latin = 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD' -%}
+    {%- assign latin_ext = 'U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF' -%}
+    @font-face { font-family: "Bodoni Moda"; font-style: normal; font-weight: 400 900; font-display: swap; src: url("{{ 'stelina-bodoni-moda-latin-normal.woff2' | asset_url }}") format("woff2"); unicode-range: {{ latin }}; }
+    @font-face { font-family: "Bodoni Moda"; font-style: normal; font-weight: 400 900; font-display: swap; src: url("{{ 'stelina-bodoni-moda-latin-ext-normal.woff2' | asset_url }}") format("woff2"); unicode-range: {{ latin_ext }}; }
+    @font-face { font-family: "Bodoni Moda"; font-style: italic; font-weight: 400 900; font-display: swap; src: url("{{ 'stelina-bodoni-moda-latin-italic.woff2' | asset_url }}") format("woff2"); unicode-range: {{ latin }}; }
+    @font-face { font-family: "Bodoni Moda"; font-style: italic; font-weight: 400 900; font-display: swap; src: url("{{ 'stelina-bodoni-moda-latin-ext-italic.woff2' | asset_url }}") format("woff2"); unicode-range: {{ latin_ext }}; }
+    @font-face { font-family: "Jost"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("{{ 'stelina-jost-latin-normal.woff2' | asset_url }}") format("woff2"); unicode-range: {{ latin }}; }
+    @font-face { font-family: "Jost"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("{{ 'stelina-jost-latin-ext-normal.woff2' | asset_url }}") format("woff2"); unicode-range: {{ latin_ext }}; }
+    :root {
+      --font-body-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+      --font-body-style: normal;
+      --font-body-weight: 400;
+      --font-body-weight-bold: 500;
+      --font-heading-family: "Bodoni Moda", "Bodoni 72", Didot, "Times New Roman", serif;
+      --font-heading-style: normal;
+      --font-heading-weight: 400;
+    }
+  {%- endif -%}
+  :root {
+    --stl-gold: {{ settings.stelina_gold | default: '#BE9A4A' }};
+    --stl-gold-text: {{ settings.stelina_gold_text | default: '#7D5F24' }};
+    --stl-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --stl-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --stl-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+{% endstyle %}
+{{ 'stelina.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'stelina.js' | asset_url }}" defer="defer"></script>

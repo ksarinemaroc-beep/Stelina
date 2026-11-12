@@ -1,0 +1,35 @@
+{% comment %}
+  Barre de progression vers la livraison offerte.
+  Seuil et messages : Paramètres du thème > Stelina.
+  @param {string} [context] - 'drawer' ou 'page'
+{% endcomment %}
+{%- if settings.stelina_ship_bar and settings.stelina_ship_threshold > 0 and cart != empty -%}
+  {%- liquid
+    assign threshold_cents = settings.stelina_ship_threshold | times: 100
+    assign remaining = threshold_cents | minus: cart.total_price
+    assign ratio = cart.total_price | times: 1.0 | divided_by: threshold_cents | at_most: 1 | round: 3
+    assign reached = false
+    if remaining <= 0
+      assign reached = true
+    endif
+  -%}
+  <stelina-shipping-bar
+    class="stl-ship stl-ship--{{ context | default: 'drawer' }}{% if reached %} is-reached{% endif %}"
+    data-ratio="{{ ratio }}"
+  >
+    <p class="stl-ship__text" role="status">
+      {% render 'stelina-star', class: 'stl-ship__star' %}
+      <span>
+        {%- if reached -%}
+          {{ settings.stelina_ship_done | escape }}
+        {%- else -%}
+          {%- capture amount -%}<strong>{{ remaining | money }}</strong>{%- endcapture -%}
+          {{ settings.stelina_ship_progress | escape | replace: '[montant]', amount }}
+        {%- endif -%}
+      </span>
+    </p>
+    <div class="stl-ship__track" aria-hidden="true">
+      <div class="stl-ship__fill" style="transform: scaleX({{ ratio }});"></div>
+    </div>
+  </stelina-shipping-bar>
+{%- endif -%}

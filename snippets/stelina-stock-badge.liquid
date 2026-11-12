@@ -1,0 +1,22 @@
+{% comment %}
+  Indique si un produit est en stock bas (stock suivi par Shopify uniquement).
+  Affiche le badge « Pièce limitée ».
+  @param {product} product
+  @param {string} [class]
+  @param {string} [id]
+{% endcomment %}
+{%- liquid
+  assign stl_low = false
+  if settings.stelina_low_stock and product.available
+    assign v = product.selected_or_first_available_variant
+    if v.inventory_management == 'shopify' and v.inventory_quantity > 0 and v.inventory_quantity <= settings.stelina_low_stock_threshold
+      assign stl_low = true
+    endif
+  endif
+-%}
+{%- if stl_low -%}
+  <span {% if id %}id="{{ id }}"{% endif %} class="badge stl-badge-limited {{ class }}">
+    {%- render 'stelina-star' -%}
+    {{- settings.stelina_low_stock_label | escape -}}
+  </span>
+{%- endif -%}

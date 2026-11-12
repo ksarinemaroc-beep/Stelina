@@ -1,0 +1,63 @@
+{% comment %}Pastilles de navigation par type de bijou (une pastille = une collection).{% endcomment %}
+{%- if section.blocks.size > 0 -%}
+  <nav class="stl-types page-width" aria-label="{{ section.settings.label | escape }}">
+    <ul class="stl-types__list" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign c = block.settings.collection
+          assign url = c.url
+          assign label = block.settings.label | default: c.title
+          assign current = false
+          if block.settings.all
+            assign url = routes.all_products_collection_url
+            if collection.handle == 'all'
+              assign current = true
+            endif
+          elsif c != blank and collection.handle == c.handle
+            assign current = true
+          endif
+          assign soon = false
+          if block.settings.all == false and c != blank and c.all_products_count == 0
+            assign soon = true
+          endif
+        -%}
+        {%- if label != blank and url != blank -%}
+          <li {{ block.shopify_attributes }}>
+            <a href="{{ url }}" class="stl-types__pill{% if current %} is-current{% endif %}"{% if current %} aria-current="page"{% endif %}>
+              {{- label | escape -}}
+              {%- if soon and section.settings.soon_label != blank -%}
+                <span class="stl-types__soon">{{ section.settings.soon_label | escape }}</span>
+              {%- endif -%}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </nav>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Stelina · Types de bijoux",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "label", "default": "Types de bijoux", "label": "Nom de la navigation (lecteurs d'écran)" },
+    { "type": "text", "id": "soon_label", "default": "bientôt", "label": "Mention pour une collection vide" }
+  ],
+  "blocks": [
+    {
+      "type": "type",
+      "name": "Type",
+      "settings": [
+        { "type": "checkbox", "id": "all", "default": false, "label": "Pastille « Tout » (tous les produits)" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Texte", "info": "Laisse vide pour reprendre le nom de la collection." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Stelina · Types de bijoux", "blocks": [{ "type": "type", "settings": { "all": true, "label": "Tout" } }] }]
+}
+{% endschema %}

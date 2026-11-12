@@ -1,0 +1,844 @@
+/* ==========================================================================
+   Stelina — surcouche du thème Dawn
+   Unités : 1rem = 10px (convention Dawn).
+   Animations : transform et opacity uniquement, coupées si l'utilisateur
+   demande moins de mouvement (prefers-reduced-motion).
+   ========================================================================== */
+
+/* ---------- Typographie ---------- */
+h1, h2, h3, h4, h5, .h0, .h1, .h2, .h3, .h4, .h5 {
+  letter-spacing: 0.01em;
+}
+
+.card__heading,
+.product__title h1,
+.product__title h2,
+.cart-item__name,
+.stl-parure__title,
+.stl-linked__title,
+.stl-arch__caption {
+  font-family: var(--font-heading-family);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.card__heading {
+  font-size: 1.8rem;
+}
+
+.cart-item__name {
+  font-size: 1.7rem;
+}
+
+.stl-eyebrow {
+  margin: 0 0 0.8rem;
+  color: var(--stl-gold-text);
+  font-size: 1.2rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ---------- Boutons : retour tactile ---------- */
+.button,
+.shopify-payment-button__button {
+  transition: transform 160ms var(--stl-ease-out);
+}
+
+.button:not([disabled]):active {
+  transform: scale(0.97);
+}
+
+/* ---------- Étoile ---------- */
+.stl-star {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  color: var(--stl-gold);
+  flex: none;
+}
+
+/* ---------- Logo ---------- */
+.stl-logo {
+  --stl-ls: 0.14em;
+  display: inline-block;
+  padding-top: 0.3em;
+  padding-left: var(--stl-ls);
+  color: var(--stl-gold);
+  font-family: var(--font-heading-family);
+  font-size: 2.6rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: var(--stl-ls);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.stl-logo__i {
+  position: relative;
+  display: inline-block;
+}
+
+.stl-logo__star {
+  position: absolute;
+  top: -0.27em;
+  left: calc(50% - var(--stl-ls) / 2);
+  width: 0.3em;
+  height: 0.3em;
+  margin-left: -0.15em;
+}
+
+@media screen and (min-width: 750px) {
+  .stl-logo {
+    font-size: 3.2rem;
+  }
+}
+
+.header__heading-link {
+  transition: opacity 200ms ease;
+}
+
+.header__heading-link .stl-logo {
+  display: block;
+}
+
+.stl-hero-logo-visible .header__heading-link:not(:focus-visible) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- En-têtes de section ---------- */
+.stl-section-head {
+  max-width: 60rem;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.stl-section-head__star {
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.stl-section-head__title {
+  margin: 0;
+}
+
+.stl-section-head__text {
+  margin-top: 1rem;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.title-wrapper-with-link .title,
+.collection-hero__title,
+.related-products__heading {
+  text-align: center;
+}
+
+.title-wrapper-with-link {
+  justify-content: center;
+}
+
+/* ---------- Accueil ---------- */
+.stl-hero__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stl-logo--hero {
+  font-size: clamp(5rem, 17vw, 10rem);
+}
+
+.stl-hero__slogan {
+  margin: 1.6rem 0 0;
+  font-family: var(--font-heading-family);
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.stl-hero__button {
+  margin-top: 2.4rem;
+}
+
+/* Arches */
+.stl-arches {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.4rem;
+  max-width: 96rem;
+  margin: 4rem auto 0;
+  padding: 0 0.6rem;
+  list-style: none;
+}
+
+.stl-arch {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 30rem;
+}
+
+.stl-arches--3:not(.stl-arches--even) .stl-arch:nth-child(2) {
+  flex-grow: 1.3;
+  max-width: 36rem;
+  margin-bottom: 2.4rem;
+}
+
+.stl-arches--2 .stl-arch:nth-child(2) {
+  margin-bottom: 2.4rem;
+}
+
+.stl-arches--1 .stl-arch {
+  max-width: 34rem;
+}
+
+.stl-arch__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.stl-arch__frame {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border-radius: 50% 50% 0 0 / 28.125% 28.125% 0 0;
+}
+
+.stl-arch__frame::after {
+  content: '';
+  position: absolute;
+  inset: -0.6rem;
+  border: 1px solid var(--stl-gold);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.stl-arch__image,
+.stl-arch__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.stl-arch__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(165deg, #f6eee2 0%, #e9dac4 100%);
+  font-size: 2.4rem;
+}
+
+.stl-arch__caption {
+  display: block;
+  margin-top: 1.4rem;
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+.stl-arch__link:focus-visible {
+  outline: 0.2rem solid rgb(var(--color-foreground));
+  outline-offset: 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .stl-arches {
+    gap: 3.2rem;
+    margin-top: 5.6rem;
+  }
+
+  .stl-arch__frame::after {
+    inset: -0.9rem;
+  }
+}
+
+/* Apparition de l'accueil : une seule vague, le logo mène, l'étoile se pose
+   quand le logo s'installe, le reste suit de près. */
+@keyframes stl-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--stl-rise, 1.2rem));
+  }
+}
+
+@keyframes stl-lift {
+  from {
+    transform: translateY(2.4rem);
+  }
+}
+
+@keyframes stl-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes stl-star-land {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-45deg);
+  }
+}
+
+@keyframes stl-twinkle {
+  0%,
+  16%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+  5% {
+    opacity: 1;
+    transform: scale(1.4) rotate(45deg);
+  }
+  10% {
+    opacity: 0.7;
+    transform: scale(0.85) rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stl-hero--animate .stl-logo--hero {
+    animation: stl-rise 700ms var(--stl-ease-out) both;
+  }
+
+  .stl-hero--animate .stl-logo--hero .stl-logo__star {
+    animation: stl-star-land 600ms var(--stl-ease-out) 450ms both, stl-twinkle 6s ease-in-out 3s infinite;
+  }
+
+  .stl-hero--animate .stl-hero__slogan {
+    --stl-rise: 0.8rem;
+    animation: stl-rise 600ms var(--stl-ease-out) 140ms both;
+  }
+
+  .stl-hero--animate .stl-hero__button {
+    animation: stl-fade 500ms ease 260ms both;
+  }
+
+  /* Les photos restent visibles dès le départ (pas de fondu) pour ne pas
+     retarder l'affichage principal ; elles glissent seulement en place. */
+  .stl-hero--animate .stl-arch {
+    animation: stl-lift 800ms var(--stl-ease-out) both;
+  }
+
+  .stl-hero--animate .stl-arch:nth-child(2) {
+    animation-duration: 700ms;
+  }
+
+  .stl-hero--animate .stl-arch:nth-child(1) {
+    animation-delay: 60ms;
+  }
+
+  .stl-hero--animate .stl-arch:nth-child(3) {
+    animation-delay: 110ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stl-hero--animate .stl-hero__intro {
+    animation: stl-fade 300ms ease both;
+  }
+}
+
+/* ---------- Bandeau défilant ---------- */
+.stl-marquee {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.stl-marquee__viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.stl-marquee__track {
+  display: flex;
+  width: max-content;
+}
+
+.stl-marquee__group {
+  display: flex;
+  flex: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stl-marquee__item {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 1.3rem 0 1.3rem 1.4rem;
+  font-size: 1.3rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stl-marquee__item .stl-star {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.stl-marquee__toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.4rem;
+  padding: 0;
+  border: 0;
+  background: rgb(var(--color-background));
+  box-shadow: -1.2rem 0 1.2rem rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+}
+
+.stl-marquee__toggle:focus-visible {
+  outline: 0.2rem solid rgb(var(--color-foreground));
+  outline-offset: -0.4rem;
+}
+
+.stl-marquee__icon-play,
+.stl-marquee.is-paused .stl-marquee__icon-pause {
+  display: none;
+}
+
+.stl-marquee.is-paused .stl-marquee__icon-play {
+  display: block;
+}
+
+@keyframes stl-marquee {
+  to {
+    transform: translateX(-12.5%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stl-marquee__track {
+    animation: stl-marquee var(--stl-marquee-duration, 16s) linear infinite;
+  }
+
+  .stl-marquee.is-paused .stl-marquee__track,
+  .stl-marquee:focus-within .stl-marquee__track {
+    animation-play-state: paused;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .stl-marquee:hover .stl-marquee__track {
+      animation-play-state: paused;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stl-marquee__track {
+    width: 100%;
+  }
+
+  .stl-marquee__group {
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0.4rem 1.4rem 0.4rem 0;
+  }
+
+  .stl-marquee__group[aria-hidden='true'],
+  .stl-marquee__toggle {
+    display: none;
+  }
+
+  .stl-marquee__item {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+}
+
+/* ---------- Parures ---------- */
+.stl-parures__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media screen and (min-width: 750px) {
+  .stl-parures__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3rem;
+  }
+}
+
+.stl-parure {
+  text-align: center;
+}
+
+.stl-parure__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.stl-parure__link:focus-visible {
+  outline: 0.2rem solid rgb(var(--color-foreground));
+  outline-offset: 0.6rem;
+}
+
+.stl-parure__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+  background: rgba(var(--color-foreground), 0.04);
+}
+
+.stl-parure__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--stl-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .stl-parure__link:hover .stl-parure__image {
+    transform: scale(1.04);
+  }
+}
+
+.stl-parure__badge {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.stl-parure__title {
+  margin: 1.4rem 0 0;
+  font-size: 2rem;
+}
+
+.stl-parure__composition {
+  margin: 0.4rem 0 0;
+  color: rgba(var(--color-foreground), 0.8);
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+}
+
+.stl-parure__price {
+  margin: 0.6rem 0 0;
+  font-size: 1.5rem;
+}
+
+.stl-parures__cta,
+.stl-soon__cta {
+  margin-top: 4rem;
+}
+
+/* ---------- Collection : pastilles par type ---------- */
+.stl-types {
+  margin-top: 0.4rem;
+}
+
+.stl-types__list {
+  display: flex;
+  gap: 0.8rem;
+  margin: 0 -1.5rem;
+  padding: 0.4rem 1.5rem 1rem;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.stl-types__list::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (min-width: 750px) {
+  .stl-types__list {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+    overflow: visible;
+  }
+}
+
+.stl-types__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 4.4rem;
+  padding: 0 1.8rem;
+  border: 1px solid rgba(var(--color-foreground), 0.35);
+  border-radius: 4rem;
+  color: rgb(var(--color-foreground));
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.stl-types__pill.is-current {
+  border-color: rgb(var(--color-foreground));
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+.stl-types__pill:focus-visible {
+  outline: 0.2rem solid rgb(var(--color-foreground));
+  outline-offset: 0.2rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stl-types__pill:not(.is-current):hover {
+    border-color: rgb(var(--color-foreground));
+  }
+}
+
+.stl-types__soon {
+  color: var(--stl-gold-text);
+  font-family: var(--font-heading-family);
+  font-size: 1.3rem;
+  font-style: italic;
+  letter-spacing: 0;
+}
+
+.stl-types__pill.is-current .stl-types__soon {
+  color: inherit;
+}
+
+.collection-hero__title {
+  margin-bottom: 0;
+}
+
+.collection-hero__description {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* ---------- Badges ---------- */
+.stl-badge-limited {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-color: var(--stl-gold);
+  background: #fffdf8;
+  color: #2a1e17;
+}
+
+.stl-badge-limited .stl-star {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.stl-product-badge {
+  margin: 0 0 1rem;
+}
+
+/* ---------- Fiche produit ---------- */
+.product__title h1 {
+  font-size: calc(var(--font-heading-scale) * 3.4rem);
+}
+
+.stl-material {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  margin: 2rem 0;
+  padding: 1.4rem 0;
+  border-top: 1px solid rgba(var(--color-foreground), 0.12);
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
+}
+
+.stl-material + .stl-material {
+  margin-top: -2rem;
+  border-top: 0;
+}
+
+.stl-material dt {
+  min-width: 8rem;
+  color: var(--stl-gold-text);
+  font-size: 1.2rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.stl-material dd {
+  margin: 0;
+}
+
+.stl-linked {
+  margin: 2.4rem 0;
+}
+
+.stl-linked__heading {
+  margin: 0 0 1.2rem;
+  color: var(--stl-gold-text);
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  font-style: normal;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.stl-linked__list {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stl-linked__link {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 1rem 1.4rem 1rem 1rem;
+  border: 1px solid rgba(var(--color-foreground), 0.12);
+  border-radius: 1.2rem;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 160ms ease;
+}
+
+.stl-linked__link:focus-visible {
+  outline: 0.2rem solid rgb(var(--color-foreground));
+  outline-offset: 0.2rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stl-linked__link:hover {
+    border-color: var(--stl-gold);
+  }
+}
+
+.stl-linked__media {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 5.6rem;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+  background: linear-gradient(165deg, #f6eee2 0%, #e9dac4 100%);
+}
+
+.stl-linked__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stl-linked__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.stl-linked__title {
+  font-size: 1.8rem;
+}
+
+.stl-linked__price {
+  font-size: 1.4rem;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.stl-linked__arrow {
+  width: 1.4rem;
+  flex: none;
+}
+
+/* ---------- Panier : livraison offerte ---------- */
+.stl-ship {
+  display: block;
+  padding: 1.2rem 0 1.6rem;
+}
+
+.stl-ship--drawer {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: rgb(var(--color-background));
+}
+
+.stl-ship__text {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0 0 1rem;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.stl-ship__text strong {
+  font-weight: var(--font-body-weight-bold);
+}
+
+.stl-ship__star {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.stl-ship__track {
+  height: 0.4rem;
+  overflow: hidden;
+  border-radius: 0.4rem;
+  background: rgba(var(--color-foreground), 0.1);
+}
+
+.stl-ship__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--stl-gold);
+  transform-origin: left center;
+  transition: transform 400ms var(--stl-ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stl-ship__fill {
+    transition: none;
+  }
+}
+
+cart-drawer.is-empty .stl-ship {
+  display: none;
+}
+
+/* ---------- Bientôt disponible ---------- */
+.stl-soon .stl-arches {
+  max-width: 64rem;
+  margin-top: 1rem;
+}
+
+/* ---------- Pied de page ---------- */
+.footer-block__brand-info .footer-block__heading,
+.footer-block__heading {
+  font-family: var(--font-heading-family);
+  font-size: 2rem;
+}
+
+.footer .list-social__link {
+  min-width: 4.4rem;
+  min-height: 4.4rem;
+}

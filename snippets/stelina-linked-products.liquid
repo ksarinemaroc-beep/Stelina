@@ -1,0 +1,68 @@
+{% comment %}
+  Produits assortis, reliés par les tags :
+  - sur une pièce, le tag « parure-xxx » pointe vers le produit dont le handle est « parure-xxx » ;
+  - sur une parure, le tag « piece-xxx » pointe vers le produit dont le handle est « xxx ».
+  @param {product} product
+  @param {block} block
+{% endcomment %}
+{%- liquid
+  assign handles = ''
+  assign is_set = false
+  for tag in product.tags
+    assign t = tag | downcase | strip
+    assign head = t | slice: 0, 7
+    assign head6 = t | slice: 0, 6
+    if head == 'parure-'
+      assign handles = handles | append: t | append: ','
+    elsif head6 == 'piece-'
+      assign h = t | remove_first: 'piece-'
+      assign handles = handles | append: h | append: ','
+      assign is_set = true
+    endif
+  endfor
+  assign handles = handles | split: ','
+  assign heading = block.settings.heading_piece
+  if is_set
+    assign heading = block.settings.heading_set
+  endif
+-%}
+{%- capture items -%}
+  {%- for h in handles limit: 6 -%}
+    {%- assign p = all_products[h] -%}
+    {%- if p != blank and p.id != product.id -%}
+      <li class="stl-linked__item">
+        <a href="{{ p.url }}" class="stl-linked__link">
+          <span class="stl-linked__media">
+            {%- if p.featured_media != blank -%}
+              {{ p.featured_media | image_url: width: 240 | image_tag: widths: '80, 160, 240', sizes: '72px', loading: 'lazy', alt: '' }}
+            {%- else -%}
+              {% render 'stelina-star' %}
+            {%- endif -%}
+          </span>
+          <span class="stl-linked__info">
+            <span class="stl-linked__title">{{ p.title | escape }}</span>
+            <span class="stl-linked__price">
+              {%- if p.available -%}
+                {{ p.price | money }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </span>
+          </span>
+          <span class="stl-linked__arrow svg-wrapper" aria-hidden="true">{{- 'icon-arrow.svg' | inline_asset_content -}}</span>
+        </a>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign items = items | strip -%}
+{%- if items != blank -%}
+  <div class="stl-linked" {{ block.shopify_attributes }}>
+    {%- if heading != blank -%}
+      <h2 class="stl-linked__heading">{{ heading | escape }}</h2>
+    {%- endif -%}
+    <ul class="stl-linked__list" role="list">
+      {{ items }}
+    </ul>
+  </div>
+{%- endif -%}

@@ -1,0 +1,116 @@
+{% comment %}Accueil Stelina : logo animé, slogan et trio de photos en arche.{% endcomment %}
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px; }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; }
+  }
+{%- endstyle -%}
+{%- if section.settings.hide_header_logo and request.page_type == 'index' -%}
+  <script>
+    document.documentElement.classList.add('stl-hero-logo-visible');
+  </script>
+{%- endif -%}
+
+<div class="stl-hero color-{{ section.settings.color_scheme }} gradient{% if section.settings.animate %} stl-hero--animate{% endif %}">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="stl-hero__intro">
+      {%- if section.settings.show_logo -%}
+        <div class="stl-hero__logo"{% if section.settings.hide_header_logo %} data-stl-hero-logo{% endif %}>
+          {% render 'stelina-logo', modifier: 'hero', decorative: true %}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.slogan != blank -%}
+        <p class="stl-hero__slogan">{{ section.settings.slogan | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a
+          class="button button--secondary stl-hero__button"
+          {% if section.settings.button_link != blank %}
+            href="{{ section.settings.button_link }}"
+          {% else %}
+            role="link" aria-disabled="true"
+          {% endif %}
+        >
+          {{- section.settings.button_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="stl-arches stl-arches--{{ section.blocks.size }}" role="list">
+        {%- for block in section.blocks -%}
+          <li class="stl-arch" {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" class="stl-arch__link">
+            {%- endif -%}
+            <div class="stl-arch__frame">
+              {%- if block.settings.image != blank -%}
+                {%- liquid
+                  assign loading = 'eager'
+                  assign priority = 'auto'
+                  if forloop.index == 2 or section.blocks.size == 1
+                    assign priority = 'high'
+                  endif
+                -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 900
+                  | image_tag:
+                    widths: '165, 250, 360, 540, 720, 900',
+                    sizes: '(min-width: 990px) 320px, (min-width: 750px) 30vw, 36vw',
+                    loading: loading,
+                    fetchpriority: priority,
+                    class: 'stl-arch__image',
+                    alt: block.settings.image.alt
+                }}
+              {%- else -%}
+                <div class="stl-arch__placeholder">{% render 'stelina-star' %}</div>
+              {%- endif -%}
+            </div>
+            {%- if block.settings.caption != blank -%}
+              <span class="stl-arch__caption">{{ block.settings.caption | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.link != blank -%}
+              </a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stelina · Accueil",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "max_blocks": 3,
+  "settings": [
+    { "type": "checkbox", "id": "show_logo", "default": true, "label": "Afficher le grand logo" },
+    { "type": "checkbox", "id": "hide_header_logo", "default": true, "label": "Masquer le petit logo de l'en-tête tant que le grand est visible", "info": "S'applique uniquement à la page d'accueil." },
+    { "type": "text", "id": "slogan", "default": "Brille chaque jour, sans compromis.", "label": "Slogan" },
+    { "type": "text", "id": "button_label", "default": "Découvrir les bijoux", "label": "Texte du bouton", "info": "Laisse vide pour masquer le bouton." },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton" },
+    { "type": "checkbox", "id": "animate", "default": true, "label": "Animer l'apparition et faire scintiller l'étoile", "info": "Toujours désactivé pour les personnes qui ont demandé à réduire les animations." },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Couleurs", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge du haut", "default": 28 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge du bas", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Photo en arche",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo", "info": "Format portrait (story). Pense à renseigner le texte alternatif de l'image." },
+        { "type": "text", "id": "caption", "label": "Légende (facultatif)" },
+        { "type": "url", "id": "link", "label": "Lien (facultatif)" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Stelina · Accueil", "blocks": [{ "type": "photo" }, { "type": "photo" }, { "type": "photo" }] }
+  ]
+}
+{% endschema %}
