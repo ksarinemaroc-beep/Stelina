@@ -129,7 +129,7 @@
         "s1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/stelina-campagne-1.webp",
+            "image": "shopify://shop_images/stelina-film-solea-depart.webp",
             "focus": "object-position: center center;",
             "eyebrow": "Soléa",
             "heading": "La lumière en détail"
@@ -141,8 +141,8 @@
             "image": "shopify://shop_images/stelina-campagne-2.webp",
             "focus": "object-position: center center;",
             "eyebrow": "Le collier",
-            "heading": "Soléa",
-            "button_label": "Voir le collier",
+            "heading": "Une médaille nacrée",
+            "button_label": "Voir Soléa",
             "button_link": "shopify://products/solea"
           }
         },
@@ -151,10 +151,10 @@
           "settings": {
             "image": "shopify://shop_images/stelina-campagne-3.webp",
             "focus": "object-position: center top;",
-            "eyebrow": "Portée par Zeya",
-            "heading": "Écrin Rose",
-            "button_label": "Découvrir la parure",
-            "button_link": "shopify://products/parure-ecrin-rose"
+            "eyebrow": "Acier inoxydable",
+            "heading": "Brille chaque jour, sans compromis.",
+            "button_label": "Découvrir les bijoux",
+            "button_link": "shopify://collections/all"
           }
         }
       },
@@ -166,9 +166,12 @@
       "settings": {
         "pin": true,
         "first_is_h1": true,
-        "label": "La campagne Écrin Rose",
+        "label": "Le collier Soléa",
         "nav_label": "Étapes de la campagne",
-        "color_scheme": "scheme-4"
+        "color_scheme": "scheme-4",
+        "sprite": "shopify://shop_images/stelina-film-solea.webp",
+        "sprite_frames": 48,
+        "sprite_columns": 8
       }
     },
     "duos": {
