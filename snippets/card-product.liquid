@@ -109,6 +109,13 @@
                 {%- endif -%}
               </div>
             </div>
+            {%- if card_product.media[1] != null and show_secondary_image and settings.stelina_card_toggle -%}
+              <button type="button" class="stl-card-toggle" aria-pressed="false" data-stl-card-toggle>
+                <span class="visually-hidden">{{ card_product.title | escape }} : </span>
+                <span class="stl-duo__toggle-on">{{ settings.stelina_worn_label | escape }}</span>
+                <span class="stl-duo__toggle-off">{{ settings.stelina_solo_label | escape }}</span>
+              </button>
+            {%- endif -%}
           {%- endif -%}
           <div class="card__content">
             <div class="card__information">

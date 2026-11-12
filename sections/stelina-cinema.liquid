@@ -1,0 +1,120 @@
+{% comment %}
+  Campagne au défilement : les visuels se recouvrent l'un l'autre pendant que la page défile.
+  Sans JavaScript, ou si les animations sont réduites, les visuels s'affichent simplement à la suite.
+{% endcomment %}
+{%- if section.blocks.size > 0 -%}
+  <stelina-cinema
+    class="stl-cinema color-{{ section.settings.color_scheme }} gradient"
+    style="--stl-slides: {{ section.blocks.size }};"
+    {% if section.settings.label != blank %}
+      aria-label="{{ section.settings.label | escape }}"
+    {% endif %}
+    {% unless section.settings.pin %}
+      data-static
+    {% endunless %}
+  >
+    <div class="stl-cinema__stage">
+      <div class="stl-cinema__progress" aria-hidden="true"><span data-cinema-progress></span></div>
+      {%- for block in section.blocks -%}
+        <article class="stl-cinema__slide{% if forloop.first %} is-current{% endif %}" data-cinema-slide {{ block.shopify_attributes }}>
+          <div class="stl-cinema__picture" data-cinema-picture>
+            {%- if block.settings.image != blank -%}
+              {%- liquid
+                assign image_alt = block.settings.image.alt | default: block.settings.heading
+                assign loading = 'lazy'
+                assign priority = 'auto'
+                if forloop.first
+                  assign loading = 'eager'
+                  assign priority = 'high'
+                endif
+              -%}
+              {{
+                block.settings.image
+                | image_url: width: 1600
+                | image_tag:
+                  widths: '375, 550, 750, 1100, 1600',
+                  sizes: '(min-width: 990px) 58vw, 100vw',
+                  loading: loading,
+                  fetchpriority: priority,
+                  alt: image_alt,
+                  style: block.settings.focus
+              }}
+            {%- else -%}
+              <div class="stl-arch__placeholder">{% render 'stelina-star' %}</div>
+            {%- endif -%}
+          </div>
+          <div class="stl-cinema__copy" data-cinema-copy>
+            {%- if block.settings.eyebrow != blank -%}
+              <p class="stl-eyebrow">{{ block.settings.eyebrow | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              {%- if forloop.first and section.settings.first_is_h1 -%}
+                <h1 class="stl-cinema__heading">{{ block.settings.heading | escape }}</h1>
+              {%- else -%}
+                <h2 class="stl-cinema__heading">{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="stl-cinema__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
+              <a class="button stl-cinema__button" href="{{ block.settings.button_link }}">
+                {{- block.settings.button_label | escape -}}
+              </a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+
+      {%- if section.blocks.size > 1 -%}
+        <nav class="stl-cinema__nav" aria-label="{{ section.settings.nav_label | escape }}" hidden>
+          {%- for block in section.blocks -%}
+            <button type="button" data-cinema-index="{{ forloop.index0 }}" aria-label="{{ block.settings.heading | default: forloop.index | escape }}">
+              <span aria-hidden="true"></span>
+            </button>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+    </div>
+  </stelina-cinema>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Stelina · Campagne",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "max_blocks": 5,
+  "settings": [
+    { "type": "checkbox", "id": "pin", "default": true, "label": "Effet cinéma au défilement", "info": "Les visuels restent à l'écran et se recouvrent pendant le défilement. Toujours désactivé pour les personnes qui ont demandé à réduire les animations." },
+    { "type": "checkbox", "id": "first_is_h1", "default": true, "label": "Le premier titre est le titre principal de la page", "info": "À laisser coché si cette section ouvre la page d'accueil." },
+    { "type": "text", "id": "label", "default": "La campagne Stelina", "label": "Nom de la section (lecteurs d'écran)" },
+    { "type": "text", "id": "nav_label", "default": "Étapes de la campagne", "label": "Nom des points de navigation (lecteurs d'écran)" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Couleurs", "default": "scheme-4" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Visuel",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo", "info": "Pense à renseigner le texte alternatif de l'image." },
+        {
+          "type": "select", "id": "focus", "label": "Cadrage", "default": "object-position: center center;",
+          "options": [
+            { "value": "object-position: center top;", "label": "Haut" },
+            { "value": "object-position: center center;", "label": "Centre" },
+            { "value": "object-position: center bottom;", "label": "Bas" }
+          ]
+        },
+        { "type": "text", "id": "eyebrow", "label": "Mention au-dessus du titre" },
+        { "type": "text", "id": "heading", "default": "Titre", "label": "Titre" },
+        { "type": "text", "id": "text", "label": "Texte (facultatif)" },
+        { "type": "text", "id": "button_label", "label": "Texte du bouton" },
+        { "type": "url", "id": "button_link", "label": "Lien du bouton" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Stelina · Campagne", "blocks": [{ "type": "slide" }, { "type": "slide" }, { "type": "slide" }] }]
+}
+{% endschema %}

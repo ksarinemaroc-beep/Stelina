@@ -1,44 +1,5 @@
 {
   "sections": {
-    "hero": {
-      "type": "stelina-hero",
-      "blocks": {
-        "photo-1": {
-          "type": "photo",
-          "settings": {
-            "link": "shopify://collections/colliers"
-          }
-        },
-        "photo-2": {
-          "type": "photo",
-          "settings": {
-            "link": "shopify://collections/all"
-          }
-        },
-        "photo-3": {
-          "type": "photo",
-          "settings": {
-            "link": "shopify://collections/bracelets"
-          }
-        }
-      },
-      "block_order": [
-        "photo-1",
-        "photo-2",
-        "photo-3"
-      ],
-      "settings": {
-        "show_logo": true,
-        "hide_header_logo": true,
-        "slogan": "Brille chaque jour, sans compromis.",
-        "button_label": "Découvrir les bijoux",
-        "button_link": "shopify://collections/all",
-        "animate": true,
-        "color_scheme": "scheme-1",
-        "padding_top": 28,
-        "padding_bottom": 48
-      }
-    },
     "marquee": {
       "type": "stelina-marquee",
       "blocks": {
@@ -75,7 +36,7 @@
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "title": "Les incontournables",
+        "title": "Les bijoux Stelina",
         "heading_size": "h1",
         "description": "",
         "show_description": false,
@@ -103,6 +64,14 @@
     "parures": {
       "type": "stelina-parures",
       "blocks": {
+        "parure-ecrin-rose": {
+          "type": "parure",
+          "settings": {
+            "product": "parure-ecrin-rose",
+            "title": "Parure Écrin Rose",
+            "composition": "Soléa + Iris"
+          }
+        },
         "parure-papillon": {
           "type": "parure",
           "settings": {
@@ -137,6 +106,7 @@
         }
       },
       "block_order": [
+        "parure-ecrin-rose",
         "parure-papillon",
         "parure-lien",
         "parure-superposition",
@@ -152,12 +122,559 @@
         "padding_top": 48,
         "padding_bottom": 56
       }
+    },
+    "cinema": {
+      "type": "stelina-cinema",
+      "blocks": {
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/stelina-campagne-1.webp",
+            "focus": "object-position: center center;",
+            "eyebrow": "Soléa",
+            "heading": "La lumière en détail"
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/stelina-campagne-2.webp",
+            "focus": "object-position: center center;",
+            "eyebrow": "Le collier",
+            "heading": "Soléa",
+            "button_label": "Voir le collier",
+            "button_link": "shopify://products/solea"
+          }
+        },
+        "s3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/stelina-campagne-3.webp",
+            "focus": "object-position: center top;",
+            "eyebrow": "Portée par Zeya",
+            "heading": "Écrin Rose",
+            "button_label": "Découvrir la parure",
+            "button_link": "shopify://products/parure-ecrin-rose"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "pin": true,
+        "first_is_h1": true,
+        "label": "La campagne Écrin Rose",
+        "nav_label": "Étapes de la campagne",
+        "color_scheme": "scheme-4"
+      }
+    },
+    "duos": {
+      "type": "stelina-duos",
+      "blocks": {
+        "d1": {
+          "type": "duo",
+          "settings": {
+            "title": "Cœur pailleté",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-coeur-paillete-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-coeur-paillete-porte.webp"
+          }
+        },
+        "d2": {
+          "type": "duo",
+          "settings": {
+            "title": "Fleur perlée",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-fleur-perlee-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-fleur-perlee-porte.webp"
+          }
+        },
+        "d3": {
+          "type": "duo",
+          "settings": {
+            "title": "Médaillon pêche",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-medaillon-peche-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-medaillon-peche-porte.webp"
+          }
+        },
+        "d4": {
+          "type": "duo",
+          "settings": {
+            "title": "Coquillage",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-coquillage-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-coquillage-porte.webp"
+          }
+        },
+        "d5": {
+          "type": "duo",
+          "settings": {
+            "title": "Coussin fleuri",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-coussin-fleuri-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-coussin-fleuri-porte.webp"
+          }
+        },
+        "d6": {
+          "type": "duo",
+          "settings": {
+            "title": "Marguerite ovale",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-marguerite-ovale-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-marguerite-ovale-porte.webp"
+          }
+        },
+        "d7": {
+          "type": "duo",
+          "settings": {
+            "title": "Rectangle coquille",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-rectangle-coquille-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-rectangle-coquille-porte.webp"
+          }
+        },
+        "d8": {
+          "type": "duo",
+          "settings": {
+            "title": "Éventail ambre",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-eventail-ambre-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-eventail-ambre-porte.webp"
+          }
+        },
+        "d9": {
+          "type": "duo",
+          "settings": {
+            "title": "Ovale losange",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-ovale-losange-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-ovale-losange-porte.webp"
+          }
+        },
+        "d10": {
+          "type": "duo",
+          "settings": {
+            "title": "Fleur rose",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-fleur-rose-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-fleur-rose-porte.webp"
+          }
+        },
+        "d11": {
+          "type": "duo",
+          "settings": {
+            "title": "Triple perle",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-triple-perle-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-triple-perle-porte.webp"
+          }
+        },
+        "d12": {
+          "type": "duo",
+          "settings": {
+            "title": "Petites fleurs",
+            "category": "Bracelets",
+            "image_solo": "shopify://shop_images/stelina-duo-petites-fleurs-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-petites-fleurs-porte.webp"
+          }
+        },
+        "d13": {
+          "type": "duo",
+          "settings": {
+            "title": "Martelé fin",
+            "category": "Bracelets",
+            "image_solo": "shopify://shop_images/stelina-duo-martele-fin-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-martele-fin-porte.webp"
+          }
+        },
+        "d14": {
+          "type": "duo",
+          "settings": {
+            "title": "Grandes fleurs",
+            "category": "Bracelets",
+            "image_solo": "shopify://shop_images/stelina-duo-grandes-fleurs-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-grandes-fleurs-porte.webp"
+          }
+        },
+        "d15": {
+          "type": "duo",
+          "settings": {
+            "title": "Manchette ondulee",
+            "category": "Bracelets",
+            "image_solo": "shopify://shop_images/stelina-duo-manchette-ondulee-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-manchette-ondulee-porte.webp"
+          }
+        },
+        "d16": {
+          "type": "duo",
+          "settings": {
+            "title": "Goutte",
+            "category": "Boucles d’oreilles",
+            "image_solo": "shopify://shop_images/stelina-duo-goutte-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-goutte-porte.webp"
+          }
+        },
+        "d17": {
+          "type": "duo",
+          "settings": {
+            "title": "Ovale bombé",
+            "category": "Boucles d’oreilles",
+            "image_solo": "shopify://shop_images/stelina-duo-ovale-bombe-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-ovale-bombe-porte.webp"
+          }
+        },
+        "d18": {
+          "type": "duo",
+          "settings": {
+            "title": "Créole lisse",
+            "category": "Boucles d’oreilles",
+            "image_solo": "shopify://shop_images/stelina-duo-creole-lisse-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-creole-lisse-porte.webp"
+          }
+        },
+        "d19": {
+          "type": "duo",
+          "settings": {
+            "title": "Torsade",
+            "category": "Boucles d’oreilles",
+            "image_solo": "shopify://shop_images/stelina-duo-torsade-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-torsade-porte.webp"
+          }
+        },
+        "d20": {
+          "type": "duo",
+          "settings": {
+            "title": "Pavé",
+            "category": "Boucles d’oreilles",
+            "image_solo": "shopify://shop_images/stelina-duo-pave-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-pave-porte.webp"
+          }
+        },
+        "d21": {
+          "type": "duo",
+          "settings": {
+            "title": "Martelé",
+            "category": "Boucles d’oreilles",
+            "image_solo": "shopify://shop_images/stelina-duo-martele-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-martele-porte.webp"
+          }
+        },
+        "d22": {
+          "type": "duo",
+          "settings": {
+            "title": "Rectangle",
+            "category": "Boucles d’oreilles",
+            "image_solo": "shopify://shop_images/stelina-duo-rectangle-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-rectangle-porte.webp"
+          }
+        },
+        "d23": {
+          "type": "duo",
+          "settings": {
+            "title": "Trapeze",
+            "category": "Boucles d’oreilles",
+            "image_solo": "shopify://shop_images/stelina-duo-trapeze-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-trapeze-porte.webp"
+          }
+        },
+        "d24": {
+          "type": "duo",
+          "settings": {
+            "title": "Goutte rainurée",
+            "category": "Boucles d’oreilles",
+            "image_solo": "shopify://shop_images/stelina-duo-goutte-rainuree-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-goutte-rainuree-porte.webp"
+          }
+        },
+        "d25": {
+          "type": "duo",
+          "settings": {
+            "title": "Coussin nacre",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-coussin-nacre-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-coussin-nacre-porte.webp"
+          }
+        },
+        "d26": {
+          "type": "duo",
+          "settings": {
+            "title": "Ovale croise",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-ovale-croise-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-ovale-croise-porte.webp"
+          }
+        },
+        "d27": {
+          "type": "duo",
+          "settings": {
+            "title": "Cabochon rond",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-cabochon-rond-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-cabochon-rond-porte.webp"
+          }
+        },
+        "d28": {
+          "type": "duo",
+          "settings": {
+            "title": "Trio de cœurs",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-trio-de-coeurs-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-trio-de-coeurs-porte.webp"
+          }
+        },
+        "d29": {
+          "type": "duo",
+          "settings": {
+            "title": "Céleste",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-celeste-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-celeste-porte.webp"
+          }
+        },
+        "d30": {
+          "type": "duo",
+          "settings": {
+            "title": "Fleur cinq petales",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-fleur-cinq-petales-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-fleur-cinq-petales-porte.webp"
+          }
+        },
+        "d31": {
+          "type": "duo",
+          "settings": {
+            "title": "Cabochons alternes",
+            "category": "Bagues",
+            "image_solo": "shopify://shop_images/stelina-duo-cabochons-alternes-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-cabochons-alternes-porte.webp"
+          }
+        },
+        "d32": {
+          "type": "duo",
+          "settings": {
+            "title": "Rectangle brun",
+            "category": "Colliers",
+            "image_solo": "shopify://shop_images/stelina-duo-rectangle-brun-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-rectangle-brun-porte.webp"
+          }
+        },
+        "d33": {
+          "type": "duo",
+          "settings": {
+            "title": "Triangle brun",
+            "category": "Colliers",
+            "image_solo": "shopify://shop_images/stelina-duo-triangle-brun-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-triangle-brun-porte.webp"
+          }
+        },
+        "d34": {
+          "type": "duo",
+          "settings": {
+            "title": "Soleil frange",
+            "category": "Colliers",
+            "image_solo": "shopify://shop_images/stelina-duo-soleil-frange-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-soleil-frange-porte.webp"
+          }
+        },
+        "d35": {
+          "type": "duo",
+          "settings": {
+            "title": "Soleil cristaux",
+            "category": "Colliers",
+            "image_solo": "shopify://shop_images/stelina-duo-soleil-cristaux-seul.webp",
+            "image_worn": "shopify://shop_images/stelina-duo-soleil-cristaux-porte.webp"
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6",
+        "d7",
+        "d8",
+        "d9",
+        "d10",
+        "d11",
+        "d12",
+        "d13",
+        "d14",
+        "d15",
+        "d16",
+        "d17",
+        "d18",
+        "d19",
+        "d20",
+        "d21",
+        "d22",
+        "d23",
+        "d24",
+        "d25",
+        "d26",
+        "d27",
+        "d28",
+        "d29",
+        "d30",
+        "d31",
+        "d32",
+        "d33",
+        "d34",
+        "d35"
+      ],
+      "settings": {
+        "heading": "Les bijoux, seuls et portés",
+        "heading_size": "h1",
+        "text": "<p>Visuels d’inspiration. Les modèles définitifs seront confirmés après sélection.</p>",
+        "ratio": "square",
+        "initial": 8,
+        "worn_label": "Vue portée",
+        "solo_label": "Bijou seul",
+        "all_label": "Tout",
+        "filter_label": "Filtrer par type de bijou",
+        "more_label": "Afficher plus",
+        "color_scheme": "scheme-1",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "bagues": {
+      "type": "stelina-gallery",
+      "blocks": {
+        "g1": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-01.webp"
+          }
+        },
+        "g2": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-02.webp"
+          }
+        },
+        "g3": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-03.webp"
+          }
+        },
+        "g4": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-04.webp"
+          }
+        },
+        "g5": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-05.webp"
+          }
+        },
+        "g6": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-06.webp"
+          }
+        },
+        "g7": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-07.webp"
+          }
+        },
+        "g8": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-08.webp"
+          }
+        },
+        "g9": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-09.webp"
+          }
+        },
+        "g10": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-10.webp"
+          }
+        },
+        "g11": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-11.webp"
+          }
+        },
+        "g12": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-12.webp"
+          }
+        },
+        "g13": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-13.webp"
+          }
+        },
+        "g14": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-14.webp"
+          }
+        },
+        "g15": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/stelina-bague-portee-15.webp"
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5",
+        "g6",
+        "g7",
+        "g8",
+        "g9",
+        "g10",
+        "g11",
+        "g12",
+        "g13",
+        "g14",
+        "g15"
+      ],
+      "settings": {
+        "eyebrow": "Bientôt disponible",
+        "heading": "Les bagues Stelina",
+        "heading_size": "h1",
+        "text": "<p>Bagues dorées, à porter seules ou en duo.</p>",
+        "button_label": "",
+        "button_link": "shopify://collections/bagues",
+        "prev_label": "Photos précédentes",
+        "next_label": "Photos suivantes",
+        "color_scheme": "scheme-2",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
     }
   },
   "order": [
-    "hero",
+    "cinema",
     "marquee",
     "featured",
-    "parures"
+    "parures",
+    "duos",
+    "bagues"
   ]
 }

@@ -1,0 +1,156 @@
+{% comment %}
+  Galerie « seul / porté » : chaque carte bascule entre la photo du bijou seul et la photo portée.
+  Filtres par type construits à partir du champ « Type » des blocs.
+{% endcomment %}
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px; }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; }
+  }
+{%- endstyle -%}
+{%- liquid
+  assign categories = ''
+  for block in section.blocks
+    assign cat = block.settings.category | strip
+    if cat != blank
+      assign marker = '|' | append: cat | append: '|'
+      unless categories contains marker
+        assign categories = categories | append: marker
+      endunless
+    endif
+  endfor
+  assign categories = categories | replace: '||', '|' | remove_first: '|' | split: '|'
+-%}
+
+<div class="stl-duos color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="stl-section-head">
+      {% render 'stelina-star', class: 'stl-section-head__star' %}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="stl-section-head__title {{ section.settings.heading_size }}" id="Duos-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="stl-section-head__text rte">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+
+    <stelina-duos data-initial="{{ section.settings.initial }}">
+      {%- if categories.size > 1 -%}
+        <div class="stl-duos__filters" role="group" aria-label="{{ section.settings.filter_label | escape }}" hidden>
+          <button type="button" class="stl-types__pill is-current" aria-pressed="true" data-duo-filter="all">
+            {{- section.settings.all_label | escape -}}
+          </button>
+          {%- for cat in categories -%}
+            <button type="button" class="stl-types__pill" aria-pressed="false" data-duo-filter="{{ cat | handleize }}">
+              {{- cat | escape -}}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <ul class="stl-duos__grid stl-duos__grid--{{ section.settings.ratio }}" role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign p = block.settings.product
+            assign title = block.settings.title
+            if title == blank and p != blank
+              assign title = p.title
+            endif
+            assign solo = block.settings.image_solo
+            assign worn = block.settings.image_worn
+            if p != blank
+              assign solo = solo | default: p.media[0]
+              assign worn = worn | default: p.media[1]
+            endif
+            assign solo_alt = title | append: ' — ' | append: section.settings.solo_label
+            assign worn_alt = title | append: ' — ' | append: section.settings.worn_label
+            if solo.alt != blank
+              assign solo_alt = solo.alt
+            endif
+            if worn.alt != blank
+              assign worn_alt = worn.alt
+            endif
+          -%}
+          <li class="stl-duo" data-category="{{ block.settings.category | strip | handleize }}" {{ block.shopify_attributes }}>
+            <div class="stl-duo__media" id="Duo-{{ block.id }}">
+              {%- if solo != blank -%}
+                {{ solo | image_url: width: 900 | image_tag: widths: '165, 250, 360, 540, 720, 900', sizes: '(min-width: 990px) 270px, (min-width: 750px) 30vw, 46vw', loading: 'lazy', class: 'stl-duo__solo', alt: solo_alt }}
+              {%- else -%}
+                <div class="stl-arch__placeholder stl-duo__solo">{% render 'stelina-star' %}</div>
+              {%- endif -%}
+              {%- if worn != blank -%}
+                {{ worn | image_url: width: 900 | image_tag: widths: '165, 250, 360, 540, 720, 900', sizes: '(min-width: 990px) 270px, (min-width: 750px) 30vw, 46vw', loading: 'lazy', class: 'stl-duo__worn', alt: worn_alt }}
+                <button type="button" class="stl-duo__toggle" aria-pressed="false" aria-controls="Duo-{{ block.id }}" hidden>
+                  <span class="visually-hidden">{{ title | escape }} : </span>
+                  <span class="stl-duo__toggle-on">{{ section.settings.worn_label | escape }}</span>
+                  <span class="stl-duo__toggle-off">{{ section.settings.solo_label | escape }}</span>
+                </button>
+              {%- endif -%}
+            </div>
+            {%- if title != blank -%}
+              <h3 class="stl-duo__title">
+                {%- if p != blank -%}
+                  <a href="{{ p.url }}" class="link">{{ title | escape }}</a>
+                {%- else -%}
+                  {{ title | escape }}
+                {%- endif -%}
+              </h3>
+            {%- endif -%}
+            {%- if p != blank -%}
+              <p class="stl-duo__price">{{ p.price | money }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <div class="center stl-duos__more" hidden>
+        <button type="button" class="button button--secondary" data-duo-more>{{ section.settings.more_label | escape }}</button>
+      </div>
+    </stelina-duos>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stelina · Seuls et portés",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "max_blocks": 50,
+  "settings": [
+    { "type": "text", "id": "heading", "default": "Les bijoux, seuls et portés", "label": "Titre" },
+    {
+      "type": "select", "id": "heading_size", "label": "Taille du titre", "default": "h1",
+      "options": [{ "value": "h2", "label": "Petite" }, { "value": "h1", "label": "Moyenne" }, { "value": "h0", "label": "Grande" }]
+    },
+    { "type": "richtext", "id": "text", "label": "Texte" },
+    {
+      "type": "select", "id": "ratio", "label": "Format des photos", "default": "square",
+      "options": [{ "value": "square", "label": "Carré" }, { "value": "portrait", "label": "Portrait" }, { "value": "landscape", "label": "Paysage" }]
+    },
+    { "type": "range", "id": "initial", "min": 4, "max": 48, "step": 4, "default": 8, "label": "Nombre de bijoux affichés au départ", "info": "Les suivants apparaissent avec le bouton « Afficher plus »." },
+    { "type": "text", "id": "worn_label", "default": "Vue portée", "label": "Bouton : voir le bijou porté" },
+    { "type": "text", "id": "solo_label", "default": "Bijou seul", "label": "Bouton : revoir le bijou seul" },
+    { "type": "text", "id": "all_label", "default": "Tout", "label": "Filtre : tout afficher" },
+    { "type": "text", "id": "filter_label", "default": "Filtrer par type de bijou", "label": "Nom des filtres (lecteurs d'écran)" },
+    { "type": "text", "id": "more_label", "default": "Afficher plus", "label": "Bouton : afficher plus" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Couleurs", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge du haut", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge du bas", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "duo",
+      "name": "Bijou",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Nom" },
+        { "type": "text", "id": "category", "label": "Type", "info": "Exemple : Bagues. Sert à créer les filtres." },
+        { "type": "image_picker", "id": "image_solo", "label": "Photo du bijou seul" },
+        { "type": "image_picker", "id": "image_worn", "label": "Photo du bijou porté" },
+        { "type": "product", "id": "product", "label": "Produit (facultatif)", "info": "Ajoute le lien et le prix. Sans photo choisie ci-dessus, les deux premières photos du produit sont utilisées." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Stelina · Seuls et portés", "blocks": [{ "type": "duo" }, { "type": "duo" }, { "type": "duo" }, { "type": "duo" }] }]
+}
+{% endschema %}

@@ -31,13 +31,13 @@
       {
         "type": "color",
         "id": "stelina_gold",
-        "default": "#BE9A4A",
+        "default": "#BD945E",
         "label": "Or (logo, étoiles, ornements)"
       },
       {
         "type": "color",
         "id": "stelina_gold_text",
-        "default": "#7D5F24",
+        "default": "#765028",
         "label": "Or foncé (petits textes dorés)",
         "info": "Doit rester assez foncé pour être lisible sur fond blanc ou beige."
       },
@@ -96,6 +96,29 @@
         "id": "stelina_low_stock_label",
         "default": "Pièce limitée",
         "label": "Texte du badge"
+      },
+      {
+        "type": "header",
+        "content": "Cartes produit"
+      },
+      {
+        "type": "checkbox",
+        "id": "stelina_card_toggle",
+        "default": true,
+        "label": "Bouton « Vue portée » sur les cartes produit",
+        "info": "Affiche la deuxième photo du produit. Mets la photo du bijou seul en premier et la photo portée en deuxième."
+      },
+      {
+        "type": "text",
+        "id": "stelina_worn_label",
+        "default": "Vue portée",
+        "label": "Bouton : voir le bijou porté"
+      },
+      {
+        "type": "text",
+        "id": "stelina_solo_label",
+        "default": "Bijou seul",
+        "label": "Bouton : revoir le bijou seul"
       }
     ]
   },

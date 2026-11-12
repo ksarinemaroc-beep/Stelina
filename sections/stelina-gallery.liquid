@@ -1,0 +1,102 @@
+{% comment %}Carrousel de photos en arche, à faire glisser (défilement natif) ou avec les flèches.{% endcomment %}
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px; }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; }
+  }
+{%- endstyle -%}
+
+<div class="stl-gallery color-{{ section.settings.color_scheme }} gradient">
+  <div class="section-{{ section.id }}-padding">
+    <stelina-gallery>
+      <div class="stl-gallery__head page-width">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="stl-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="stl-gallery__title {{ section.settings.heading_size }}" id="Gallery-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <div class="stl-gallery__text rte">{{ section.settings.text }}</div>
+          {%- endif -%}
+        </div>
+        <div class="stl-gallery__controls" hidden>
+          <button type="button" data-gallery-step="-1" aria-label="{{ section.settings.prev_label | escape }}">
+            <span class="svg-wrapper">{{- 'icon-arrow.svg' | inline_asset_content -}}</span>
+          </button>
+          <button type="button" data-gallery-step="1" aria-label="{{ section.settings.next_label | escape }}">
+            <span class="svg-wrapper">{{- 'icon-arrow.svg' | inline_asset_content -}}</span>
+          </button>
+        </div>
+      </div>
+
+      <ul class="stl-gallery__track" role="list" tabindex="0" {% if section.settings.heading != blank %}aria-labelledby="Gallery-{{ section.id }}"{% endif %}>
+        {%- for block in section.blocks -%}
+          <li class="stl-gallery__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" class="stl-arch__link">
+            {%- endif -%}
+            <div class="stl-gallery__frame">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 900 | image_tag: widths: '250, 360, 540, 720, 900', sizes: '(min-width: 750px) 280px, 62vw', loading: 'lazy', alt: block.settings.image.alt }}
+              {%- else -%}
+                <div class="stl-arch__placeholder">{% render 'stelina-star' %}</div>
+              {%- endif -%}
+            </div>
+            {%- if block.settings.caption != blank -%}
+              <span class="stl-arch__caption">{{ block.settings.caption | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.link != blank -%}
+              </a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </stelina-gallery>
+
+    {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+      <div class="center stl-parures__cta">
+        <a href="{{ section.settings.button_link }}" class="button button--secondary">{{ section.settings.button_label | escape }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stelina · Carrousel",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "max_blocks": 24,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Mention au-dessus du titre" },
+    { "type": "text", "id": "heading", "default": "Les bagues Stelina", "label": "Titre" },
+    {
+      "type": "select", "id": "heading_size", "label": "Taille du titre", "default": "h1",
+      "options": [{ "value": "h2", "label": "Petite" }, { "value": "h1", "label": "Moyenne" }, { "value": "h0", "label": "Grande" }]
+    },
+    { "type": "richtext", "id": "text", "label": "Texte" },
+    { "type": "text", "id": "button_label", "label": "Texte du bouton" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton" },
+    { "type": "text", "id": "prev_label", "default": "Photos précédentes", "label": "Nom de la flèche gauche (lecteurs d'écran)" },
+    { "type": "text", "id": "next_label", "default": "Photos suivantes", "label": "Nom de la flèche droite (lecteurs d'écran)" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Couleurs", "default": "scheme-2" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge du haut", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge du bas", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Photo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo", "info": "Format portrait. Pense au texte alternatif." },
+        { "type": "text", "id": "caption", "label": "Légende (facultatif)" },
+        { "type": "url", "id": "link", "label": "Lien (facultatif)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Stelina · Carrousel", "blocks": [{ "type": "photo" }, { "type": "photo" }, { "type": "photo" }, { "type": "photo" }] }]
+}
+{% endschema %}
