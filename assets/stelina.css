@@ -1038,6 +1038,46 @@ cart-drawer.is-empty .stl-ship {
   }
 }
 
+/* Film au défilement : le canevas recouvre la zone photo une fois la planche chargée */
+.stl-cinema__canvas {
+  display: none;
+}
+
+.stl-cinema.is-active.has-film .stl-cinema__canvas {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: calc(100% - var(--stl-cinema-copy));
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.stl-cinema.is-active.has-film.is-film-ready .stl-cinema__canvas {
+  opacity: 1;
+}
+
+.stl-cinema.is-active.has-film .stl-cinema__slide:not(:first-child) .stl-cinema__picture {
+  visibility: hidden;
+}
+
+.stl-cinema.is-active.has-film .stl-cinema__slide {
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media screen and (min-width: 990px) {
+  .stl-cinema.is-active.has-film .stl-cinema__canvas {
+    left: 41.666%;
+    width: 58.334%;
+    height: 100%;
+  }
+}
+
 /* Entrée de la première image au chargement */
 @keyframes stl-cinema-in {
   from {

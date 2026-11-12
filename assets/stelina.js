@@ -65,7 +65,45 @@
           },
           { signal: this.abort.signal }
         );
+        this.initFilm();
         this.draw();
+      }
+
+      // Film au défilement : charge la planche d'images après le premier affichage.
+      initFilm() {
+        const canvas = this.querySelector('[data-cinema-canvas]');
+        if (!canvas || reducedMotion.matches) return;
+        const frames = Number(canvas.dataset.frames);
+        const columns = Number(canvas.dataset.columns);
+        if (!frames || !columns) return;
+        this.classList.add('has-film');
+        const sheet = new Image();
+        sheet.decoding = 'async';
+        sheet.onload = () => {
+          const rows = Math.ceil(frames / columns);
+          const width = sheet.naturalWidth / columns;
+          const height = sheet.naturalHeight / rows;
+          canvas.width = Math.round(width);
+          canvas.height = Math.round(height);
+          this.film = { canvas, context: canvas.getContext('2d'), sheet, frames, columns, width, height, last: -1 };
+          this.classList.add('is-film-ready');
+          this.schedule();
+        };
+        const large = window.innerWidth * (window.devicePixelRatio || 1) > 1400;
+        const start = () => (sheet.src = large ? canvas.dataset.srcLarge : canvas.dataset.srcSmall);
+        if (document.readyState === 'complete') start();
+        else window.addEventListener('load', start, { once: true });
+      }
+
+      drawFilm(ratio) {
+        const film = this.film;
+        if (!film) return;
+        const index = Math.min(film.frames - 1, Math.max(0, Math.round(ratio * (film.frames - 1))));
+        if (index === film.last) return;
+        film.last = index;
+        const x = (index % film.columns) * film.width;
+        const y = Math.floor(index / film.columns) * film.height;
+        film.context.drawImage(film.sheet, x, y, film.width, film.height, 0, 0, film.canvas.width, film.canvas.height);
       }
 
       disconnectedCallback() {
@@ -93,13 +131,15 @@
           const copy = slide.querySelector('[data-cinema-copy]');
           const reveal = Math.min(1, Math.max(0, progress - (index - 1))); // 0 → 1 : le visuel se découvre
           const leave = Math.min(1, Math.max(0, progress - index)); // 0 → 1 : le suivant le recouvre
-          if (picture) picture.style.clipPath = active && index > 0 ? `inset(${(1 - reveal) * 100}% 0 0 0)` : '';
-          if (media) media.style.transform = active ? `scale(${(1.08 - 0.08 * reveal + 0.05 * leave).toFixed(4)})` : '';
+          const film = active && this.classList.contains('has-film');
+          if (picture) picture.style.clipPath = active && !film && index > 0 ? `inset(${(1 - reveal) * 100}% 0 0 0)` : '';
+          if (media) media.style.transform = active && !film ? `scale(${(1.08 - 0.08 * reveal + 0.05 * leave).toFixed(4)})` : '';
           slide.classList.toggle('is-current', !active || index === current);
           if (copy) copy.inert = active && index !== current;
           this.nav?.children[index]?.setAttribute('aria-current', index === current ? 'step' : 'false');
         });
         if (this.bar) this.bar.style.transform = `scaleX(${(progress / last).toFixed(4)})`;
+        if (active) this.drawFilm(progress / last);
       }
     }
   );
