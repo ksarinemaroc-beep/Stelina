@@ -467,17 +467,35 @@ h1, h2, h3, h4, h5, .h0, .h1, .h2, .h3, .h4, .h5 {
 /* ---------- Parures ---------- */
 .stl-parures__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 3rem 1.6rem;
-  margin: 0;
-  padding: 0;
+  grid-auto-columns: 46vw;
+  grid-auto-flow: column;
+  gap: 1.6rem;
+  margin: 0 -1.5rem;
+  padding: 0 1.5rem 0.8rem;
+  overflow-x: auto;
   list-style: none;
+  scroll-padding-left: 1.5rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.stl-parures__grid::-webkit-scrollbar {
+  display: none;
+}
+
+.stl-parure {
+  scroll-snap-align: start;
 }
 
 @media screen and (min-width: 750px) {
   .stl-parures__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-columns: auto;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(min(var(--stl-count, 4), 5), minmax(0, 1fr));
     gap: 3rem;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
   }
 }
 
@@ -932,6 +950,11 @@ cart-drawer.is-empty .stl-ship {
   overflow: hidden;
 }
 
+/* En mode film, la scène prend tout l'écran : l'en-tête se cache au défilement et passe par-dessus quand il revient. */
+.stl-cinema.is-active.has-film .stl-cinema__stage {
+  height: 100svh;
+}
+
 .stl-cinema.is-active .stl-cinema__slide {
   position: absolute;
   inset: 0;
@@ -1038,21 +1061,44 @@ cart-drawer.is-empty .stl-ship {
   }
 }
 
-/* Film au défilement : le canevas recouvre la zone photo une fois la planche chargée */
+/* Film au défilement : plein écran, titres posés sur le film */
 .stl-cinema__canvas {
   display: none;
 }
 
+.stl-cinema.is-active.has-film .stl-cinema__stage {
+  background: var(--stl-film-bg, #efdbc9);
+}
+
+.stl-cinema.is-active.has-film .stl-cinema__slide {
+  display: block;
+}
+
+.stl-cinema.is-active.has-film .stl-cinema__picture {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  aspect-ratio: auto;
+  background: var(--stl-film-bg, #efdbc9);
+}
+
+.stl-cinema.is-active.has-film .stl-cinema__slide:not(:first-child) .stl-cinema__picture {
+  display: none;
+}
+
+.stl-cinema.is-active.has-film .stl-cinema__picture img,
+.stl-cinema.is-active.has-film .stl-cinema__canvas {
+  object-fit: cover;
+  object-position: 50% 38%;
+}
+
 .stl-cinema.is-active.has-film .stl-cinema__canvas {
   position: absolute;
+  inset: 0;
   z-index: 1;
-  top: 0;
-  right: 0;
-  left: 0;
   display: block;
   width: 100%;
-  height: calc(100% - var(--stl-cinema-copy));
-  object-fit: cover;
+  height: 100%;
   opacity: 0;
   transition: opacity 400ms ease;
 }
@@ -1061,20 +1107,83 @@ cart-drawer.is-empty .stl-ship {
   opacity: 1;
 }
 
-.stl-cinema.is-active.has-film .stl-cinema__slide:not(:first-child) .stl-cinema__picture {
-  visibility: hidden;
-}
-
-.stl-cinema.is-active.has-film .stl-cinema__slide {
-  z-index: 2;
+/* Fondu vers la couleur du film, sous les titres */
+.stl-cinema.is-active.has-film .stl-cinema__stage::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 48%;
+  background: linear-gradient(to top, var(--stl-film-bg, #efdbc9) 28%, transparent);
   pointer-events: none;
 }
 
+.stl-cinema.is-active.has-film .stl-cinema__copy {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: flex-start;
+  padding: 0 max(2rem, env(safe-area-inset-right, 0px)) 17rem max(2rem, env(safe-area-inset-left, 0px));
+  background: none;
+  text-align: left;
+}
+
+.stl-cinema.has-film .stl-cinema__heading {
+  max-width: 12ch;
+  font-size: clamp(4.4rem, 13.5vw, 10.4rem);
+  letter-spacing: -0.005em;
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+
+.stl-cinema.has-film .stl-eyebrow {
+  margin-bottom: 1.2rem;
+}
+
+.stl-cinema.is-active.has-film .stl-cinema__progress {
+  z-index: 3;
+  bottom: 0;
+}
+
+@media screen and (max-width: 989px) {
+  .stl-cinema.is-active.has-film .stl-cinema__nav:not([hidden]) {
+    top: 50%;
+    right: max(0.4rem, env(safe-area-inset-right, 0px));
+    bottom: auto;
+    left: auto;
+    flex-direction: column;
+    padding: 0;
+    background: none;
+    transform: translateY(-50%);
+  }
+}
+
 @media screen and (min-width: 990px) {
+  .stl-cinema.is-active.has-film .stl-cinema__picture img,
   .stl-cinema.is-active.has-film .stl-cinema__canvas {
-    left: 41.666%;
-    width: 58.334%;
-    height: 100%;
+    object-fit: contain;
+    object-position: 78% 50%;
+  }
+
+  .stl-cinema.is-active.has-film .stl-cinema__stage::after {
+    display: none;
+  }
+
+  .stl-cinema.is-active.has-film .stl-cinema__copy {
+    top: 0;
+    right: auto;
+    width: 52%;
+    justify-content: center;
+    padding: 0 0 0 max(6rem, calc((100vw - var(--page-width)) / 2 + 5rem));
+  }
+
+  .stl-cinema.is-active.has-film .stl-cinema__progress {
+    right: 0;
+    width: auto;
   }
 }
 
@@ -1424,5 +1533,156 @@ cart-drawer.is-empty .stl-ship {
     padding-right: 5rem;
     padding-left: max(5rem, calc((100vw - var(--page-width)) / 2 + 5rem));
     scroll-padding-left: max(5rem, calc((100vw - var(--page-width)) / 2 + 5rem));
+  }
+}
+
+/* ==========================================================================
+   Titres de section : capitales Bodoni
+   ========================================================================== */
+.stl-section-head__title,
+.title-wrapper-with-link .title,
+.stl-gallery__title,
+.collection-hero__title,
+.related-products__heading,
+.stl-editorial__heading {
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Bandeau défilant : italique serif, plus éditorial */
+.stl-marquee__item {
+  gap: 1.8rem;
+  padding: 1.4rem 0 1.4rem 1.8rem;
+  font-family: var(--font-heading-family);
+  font-size: 2rem;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.stl-marquee__item .stl-star {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* ==========================================================================
+   Photo éditoriale pleine largeur
+   ========================================================================== */
+.stl-editorial {
+  position: relative;
+  overflow: hidden;
+  color: #fffaf7;
+}
+
+.stl-editorial__media {
+  position: relative;
+  height: min(var(--stl-editorial-h, 82svh), 120vw);
+  min-height: 46rem;
+}
+
+.stl-editorial__media img,
+.stl-editorial__media .stl-arch__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.stl-editorial__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(30, 14, 20, var(--stl-editorial-shade, 0.55)) 0%, rgba(30, 14, 20, 0) 55%);
+}
+
+.stl-editorial__copy {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-block: 0 4rem;
+}
+
+.stl-editorial__copy .stl-eyebrow {
+  color: #fffaf7;
+}
+
+.stl-editorial__heading {
+  max-width: 14ch;
+  margin: 0;
+  color: #fffaf7;
+  font-size: clamp(4rem, 11vw, 8.8rem);
+  line-height: 0.95;
+}
+
+.stl-editorial__text {
+  max-width: 40rem;
+  margin: 1.2rem 0 0;
+  color: #fffaf7;
+}
+
+.stl-editorial__button {
+  margin-top: 2.4rem;
+}
+
+.stl-editorial .button {
+  --color-button: 255, 250, 247;
+  --color-button-text: 58, 31, 42;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stl-editorial__media img {
+    transition: transform 1200ms var(--stl-ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .stl-editorial:hover .stl-editorial__media img {
+      transform: scale(1.02);
+    }
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .stl-editorial {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    background: var(--stl-editorial-bg, #f1dee3);
+    color: #3a1f2a;
+  }
+
+  .stl-editorial__media {
+    order: 2;
+    height: min(var(--stl-editorial-h, 82svh), 56vw);
+    min-height: 56rem;
+  }
+
+  .stl-editorial__media::after {
+    display: none;
+  }
+
+  .stl-editorial__copy {
+    position: static;
+    max-width: none;
+    padding: 6rem 6rem 6rem max(6rem, calc((100vw - var(--page-width)) / 2 + 5rem));
+  }
+
+  .stl-editorial__copy .stl-eyebrow {
+    color: #765028;
+  }
+
+  .stl-editorial__heading,
+  .stl-editorial__text {
+    color: #3a1f2a;
+  }
+
+  .stl-editorial .button {
+    --color-button: 58, 31, 42;
+    --color-button-text: 255, 255, 255;
   }
 }

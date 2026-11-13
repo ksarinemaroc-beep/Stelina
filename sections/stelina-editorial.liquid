@@ -1,0 +1,64 @@
+{% comment %}Photo éditoriale pleine largeur, texte posé dessus.{% endcomment %}
+<div
+  class="stl-editorial"
+  style="--stl-editorial-h: {{ section.settings.height }}svh; --stl-editorial-shade: {{ section.settings.shade | divided_by: 100.0 }};"
+>
+  <div class="stl-editorial__media">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 2000
+        | image_tag:
+          widths: '375, 550, 750, 1100, 1500, 2000',
+          sizes: '100vw',
+          loading: 'lazy',
+          alt: section.settings.image.alt,
+          style: section.settings.focus
+      }}
+    {%- else -%}
+      <div class="stl-arch__placeholder">{% render 'stelina-star' %}</div>
+    {%- endif -%}
+  </div>
+  <div class="stl-editorial__copy page-width">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="stl-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="stl-editorial__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <p class="stl-editorial__text">{{ section.settings.text | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+      <a class="button stl-editorial__button" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stelina · Photo pleine",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo", "info": "Pense à renseigner le texte alternatif." },
+    {
+      "type": "select", "id": "focus", "label": "Cadrage", "default": "object-position: center top;",
+      "options": [
+        { "value": "object-position: center top;", "label": "Haut" },
+        { "value": "object-position: center center;", "label": "Centre" },
+        { "value": "object-position: center bottom;", "label": "Bas" }
+      ]
+    },
+    { "type": "range", "id": "height", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 85, "label": "Hauteur (part de l'écran)" },
+    { "type": "range", "id": "shade", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 55, "label": "Assombrissement sous le texte", "info": "Augmente-le si le texte se lit mal sur la photo." },
+    { "type": "text", "id": "eyebrow", "label": "Mention au-dessus du titre" },
+    { "type": "text", "id": "heading", "default": "Titre", "label": "Titre" },
+    { "type": "text", "id": "text", "label": "Texte" },
+    { "type": "text", "id": "button_label", "label": "Texte du bouton" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton" }
+  ],
+  "presets": [{ "name": "Stelina · Photo pleine" }]
+}
+{% endschema %}

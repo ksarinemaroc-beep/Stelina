@@ -89,7 +89,7 @@
           this.classList.add('is-film-ready');
           this.schedule();
         };
-        const large = window.innerWidth * (window.devicePixelRatio || 1) > 1400;
+        const large = window.innerWidth * (window.devicePixelRatio || 1) > 1000;
         const start = () => (sheet.src = large ? canvas.dataset.srcLarge : canvas.dataset.srcSmall);
         if (document.readyState === 'complete') start();
         else window.addEventListener('load', start, { once: true });

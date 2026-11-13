@@ -5,7 +5,7 @@
 {%- if section.blocks.size > 0 -%}
   <stelina-cinema
     class="stl-cinema color-{{ section.settings.color_scheme }} gradient"
-    style="--stl-slides: {{ section.blocks.size }};"
+    style="--stl-slides: {{ section.blocks.size }}; --stl-film-bg: {{ section.settings.film_bg }};"
     {% if section.settings.label != blank %}
       aria-label="{{ section.settings.label | escape }}"
     {% endif %}
@@ -23,8 +23,8 @@
           data-cinema-canvas
           data-frames="{{ section.settings.sprite_frames }}"
           data-columns="{{ section.settings.sprite_columns }}"
-          data-src-small="{{ section.settings.sprite | image_url: width: 2880 }}"
-          data-src-large="{{ section.settings.sprite | image_url: width: 5120 }}"
+          data-src-small="{{ section.settings.sprite | image_url: width: 4320 }}"
+          data-src-large="{{ section.settings.sprite | image_url: width: 5760 }}"
         ></canvas>
       {%- endif -%}
       {%- for block in section.blocks -%}
@@ -105,6 +105,7 @@
     { "type": "image_picker", "id": "sprite", "label": "Planche d'images du film" },
     { "type": "range", "id": "sprite_frames", "min": 8, "max": 96, "step": 1, "default": 48, "label": "Nombre d'images dans la planche" },
     { "type": "range", "id": "sprite_columns", "min": 2, "max": 12, "step": 1, "default": 8, "label": "Nombre de colonnes de la planche" },
+    { "type": "color", "id": "film_bg", "default": "#EFDBC9", "label": "Couleur du fond du film", "info": "Reprends la couleur du fond de la vidéo pour que le film se fonde dans la page." },
     { "type": "header", "content": "Général" },
     { "type": "checkbox", "id": "first_is_h1", "default": true, "label": "Le premier titre est le titre principal de la page", "info": "À laisser coché si cette section ouvre la page d'accueil." },
     { "type": "text", "id": "label", "default": "La campagne Stelina", "label": "Nom de la section (lecteurs d'écran)" },

@@ -18,7 +18,7 @@
       {%- endif -%}
     </div>
 
-    <ul class="stl-parures__grid" role="list">
+    <ul class="stl-parures__grid" role="list" style="--stl-count: {{ section.blocks.size }};">
       {%- for block in section.blocks -%}
         {%- liquid
           assign p = block.settings.product
